@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أداة تشخيص الأمراض المتقدمة</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+            direction: rtl;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #fff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            transition: all 0.3s ease-in-out;
+            border: 2px solid #007bff;
+        }
+        .container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            color: #007bff;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .symptom-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .symptom-item {
+            background-color: #f1f1f1;
+            margin: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            width: 30%;
+            text-align: center;
+        }
+        .symptom-item:hover {
+            background-color: #e2e6ea;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+        }
+        .symptom-item input[type="radio"] {
+            display: none;
+        }
+        .symptom-item label {
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            color: #333;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            font-size: 18px;
+            background-color: #f1f1f1;
+            border-radius: 8px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .result.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .result.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .prevention, .treatment, .medication {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+        .prevention h3, .treatment h3, .medication h3 {
+            color: #007bff;
+        }
+        ul {
+            text-align: right;
+            margin: 20px auto;
+            max-width: 500px;
+        }
+        ul li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>أداة تشخيص الأمراض المتقدمة</h1>
+        <p>اختر عرضًا لترى الأمراض المحتملة:</p>
+        
+        <div class="symptom-list">
+            <div class="symptom-item">
+                <input type="radio" name="symptom" value="fever" id="fever">
+                <label for="fever">الحمى</label>
+            </div>
+            <div class="symptom-item">
+                <input type="radio" name="symptom" value="cough" id="cough">
+                <label for="cough">السعال</label>
+            </div>
+            <div class="symptom-item">
+                <input type="radio" name="symptom" value="fatigue" id="fatigue">
+                <label for="fatigue">التعب</label>
+            </div>
+            <div class="symptom-item">
+                <input type="radio" name="symptom" value="headache" id="headache">
+                <label for="headache">الصداع</label>
+            </div>
+            <div class="symptom-item">
+                <input type="radio" name="symptom" value="nausea" id="nausea">
+                <label for="nausea">الغثيان</label>
+            </div>
+            <div class="symptom-item">
+                <input type="radio" name="symptom" value="sore_throat" id="sore_throat">
+                <label for="sore_throat">التهاب الحلق</label>
+            </div>
+            <div class="symptom-item">
+                <input type="radio" name="symptom" value="shortness_of_breath" id="shortness_of_breath">
+                <label for="shortness_of_breath">ضيق التنفس</label>
+            </div>
+            <div class="symptom-item">
+                <input type="radio" name="symptom" value="muscle_ache" id="muscle_ache">
+                <label for="muscle_ache">ألم العضلات</label>
+            </div>
+            <div class="symptom-item">
+                <input type="radio" name="symptom" value="chills" id="chills">
+                <label for="chills">القشعريرة</label>
+            </div>
+            <div class="symptom-item">
+                <input type="radio" name="symptom" value="loss_of_taste_smell" id="loss_of_taste_smell">
+                <label for="loss_of_taste_smell">فقدان حاسة التذوق/الشم</label>
+            </div>
+            <div class="symptom-item">
+                <input type="radio" name="symptom" value="chest_pain" id="chest_pain">
+                <label for="chest_pain">ألم الصدر</label>
+            </div>
+            <div class="symptom-item">
+                <input type="radio" name="symptom" value="rash" id="rash">
+                <label for="rash">الطفح الجلدي</label>
+            </div>
+        </div>
+        
+        <button type="button" onclick="diagnose()">تشخيص</button>
+        
+        <div id="result" class="result"></div>
+        <div id="prevention" class="prevention"></div>
+        <div id="treatment" class="treatment"></div>
+        <div id="medication" class="medication"></div>
+    </div>
+
+    <script>
+        function diagnose() {
+            let symptom = document.querySelector('input[name="symptom"]:checked');
+            let result = document.getElementById('result');
+            let prevention = document.getElementById('prevention');
+            let treatment = document.getElementById('treatment');
+            let medication = document.getElementById('medication');
+
+            if (!symptom) {
+                result.textContent = 'يرجى اختيار عرض.';
+                result.className = 'result error';
+                prevention.innerHTML = '';
+                treatment.innerHTML = '';
+                medication.innerHTML = '';
+                return;
+            }
+
+            let diagnosis = '';
+            let preventionText = '';
+            let treatmentText = '';
+            let medicationText = '';
+
+            switch (symptom.value) {
+                case 'fever':
+                    diagnosis = 'الأمراض المحتملة: COVID-19، الأنفلونزا، الملاريا (يرجى استشارة الطبيب في أقرب وقت للتأكد)';
+                    preventionText = `
+                        <h3>الوقاية:</h3>
+                        <ul>
+                            <li>ارتداء الكمامة في الأماكن العامة.</li>
+                            <li>تجنب لدغات البعوض (للملاريا).</li>
+                            <li>ممارسة النظافة الجيدة وغسل اليدين بانتظام.</li>
+                        </ul>`;
+                    treatmentText = `
+                        <h3>العلاج:</h3>
+                        <ul>
+                            <li>استشارة الطبيب للحصول على العلاج المناسب.</li>
+                            <li>تناول الأدوية المخفضة للحرارة مثل الباراسيتامول.</li>
+                            <li>الراحة وشرب السوائل بكثرة.</li>
+                        </ul>`;
+                    medicationText = `
+                        <h3>الأدوية:</h3>
+                        <ul>
+                            <li>باراسيتامول</li>
+                            <li>إيبوبروفين</li>
+                            <li>أدوية مضادة للفيروسات إذا كانت موصوفة</li>
+                        </ul>`;
+                    break;
+                case 'cough':
+                    diagnosis = 'الأمراض المحتملة: التهاب الحلق، الربو، الالتهاب الرئوي (يرجى استشارة الطبيب في أقرب وقت للتأكد)';
+                    preventionText = `
+                        <h3>الوقاية:</h3>
+                        <ul>
+                            <li>تجنب التدخين واستنشاق الدخان.</li>
+                            <li>الحفاظ على ترطيب الحلق بشرب السوائل.</li>
+                            <li>استخدام مرطب الهواء.</li>
+                        </ul>`;
+                    treatmentText = `
+                        <h3>العلاج:</h3>
+                        <ul>
+                            <li>استشارة الطبيب للتشخيص والعلاج المناسب.</li>
+                            <li>استخدام شراب السعال المهدئ.</li>
+                            <li>الراحة والتدفئة.</li>
+                        </ul>`;
+                    medicationText = `
+                        <h3>الأدوية:</h3>
+                        <ul>
+                            <li>شراب السعال</li>
+                            <li>موسعات الشعب الهوائية (للربو)</li>
+                            <li>مضادات حيوية (إذا كانت موصوفة)</li>
+                        </ul>`;
+                    break;
+                case 'headache':
+                    diagnosis = 'الأمراض المحتملة: الصداع النصفي، صداع التوتر، الجيوب الأنفية (يرجى استشارة الطبيب في أقرب وقت للتأكد)';
+                    preventionText = `
+                        <h3>الوقاية:</h3>
+                        <ul>
+                            <li>تقليل التوتر والإجهاد.</li>
+                            <li>الحفاظ على وضعية جيدة للجسم.</li>
+                            <li>شرب الماء بكثرة لتجنب الجفاف.</li>
+                        </ul>`;
+                    treatmentText = `
+                        <h3>العلاج:</h3>
+                        <ul>
+                            <li>استشارة الطبيب للحصول على التشخيص الصحيح.</li>
+                            <li>استخدام الأدوية المسكنة للألم.</li>
+                            <li>تطبيق الكمادات الباردة على الجبين.</li>
+                        </ul>`;
+                    medicationText = `
+                        <h3>الأدوية:</h3>
+                        <ul>
+                            <li>باراسيتامول</li>
+                            <li>إيبوبروفين</li>
+                            <li>تريبتانات (للصداع النصفي)</li>
+                        </ul>`;
+                    break;
+                case 'fatigue':
+                    diagnosis = 'الأمراض المحتملة: فقر الدم، متلازمة التعب المزمن، قصور الغدة الدرقية (يرجى استشارة الطبيب في أقرب وقت للتأكد)';
+                    preventionText = `
+                        <h3>الوقاية:</h3>
+                        <ul>
+                            <li>اتباع نظام غذائي متوازن غني بالحديد والفيتامينات.</li>
+                            <li>ممارسة التمارين الرياضية بانتظام لزيادة مستويات الطاقة.</li>
+                            <li>إدارة التوتر بفعالية.</li>
+                        </ul>`;
+                    treatmentText = `
+                        <h3>العلاج:</h3>
+                        <ul>
+                            <li>استشارة الطبيب للحصول على التشخيص والعلاج المناسب.</li>
+                            <li>تناول مكملات الحديد إذا كنت مصابًا بفقر الدم.</li>
+                            <li>العلاج بالهرمونات الدرقية إذا كان ذلك ضروريًا.</li>
+                        </ul>`;
+                    medicationText = `
+                        <h3>الأدوية:</h3>
+                        <ul>
+                            <li>مكملات الحديد</li>
+                            <li>علاج هرمونات الغدة الدرقية</li>
+                            <li>حقن فيتامين B12</li>
+                        </ul>`;
+                    break;
+                case 'nausea':
+                    diagnosis = 'الأمراض المحتملة: التهاب المعدة، الارتجاع الحمضي، التسمم الغذائي (يرجى استشارة الطبيب في أقرب وقت للتأكد)';
+                    preventionText = `
+                        <h3>الوقاية:</h3>
+                        <ul>
+                            <li>تجنب تناول الأطعمة الملوثة.</li>
+                            <li>شرب الماء النظيف وتجنب المياه الملوثة.</li>
+                            <li>تناول وجبات صغيرة ومنتظمة.</li>
+                        </ul>`;
+                    treatmentText = `
+                        <h3>العلاج:</h3>
+                        <ul>
+                            <li>استشارة الطبيب للحصول على العلاج المناسب.</li>
+                            <li>تناول أدوية مضادة للغثيان إذا لزم الأمر.</li>
+                            <li>الراحة وتجنب الأطعمة الثقيلة.</li>
+                        </ul>`;
+                    medicationText = `
+                        <h3>الأدوية:</h3>
+                        <ul>
+                            <li>أدوية مضادة للغثيان</li>
+                            <li>مضادات الحموضة (للارتجاع الحمضي)</li>
+                        </ul>`;
+                    break;
+                case 'sore_throat':
+                    diagnosis = 'الأمراض المحتملة: التهاب الحلق البكتيري، التهاب الحلق الفيروسي، التهاب اللوزتين (يرجى استشارة الطبيب في أقرب وقت للتأكد)';
+                    preventionText = `
+                        <h3>الوقاية:</h3>
+                        <ul>
+                            <li>تجنب الاتصال مع الأشخاص المصابين.</li>
+                            <li>غسل اليدين بانتظام.</li>
+                            <li>استخدام المنديل عند السعال أو العطس.</li>
+                        </ul>`;
+                    treatmentText = `
+                        <h3>العلاج:</h3>
+                        <ul>
+                            <li>استشارة الطبيب للحصول على التشخيص والعلاج المناسب.</li>
+                            <li>تناول المشروبات الدافئة.</li>
+                            <li>استخدام غرغرة بالماء والملح.</li>
+                        </ul>`;
+                    medicationText = `
+                        <h3>الأدوية:</h3>
+                        <ul>
+                            <li>أدوية مضادة للبكتيريا (إذا كانت العدوى بكتيرية)</li>
+                            <li>أدوية مسكنة للألم</li>
+                            <li>أدوية مضادة للفيروسات (إذا كانت العدوى فيروسية)</li>
+                        </ul>`;
+                    break;
+                case 'shortness_of_breath':
+                    diagnosis = 'الأمراض المحتملة: الربو، الالتهاب الرئوي، قصور القلب (يرجى استشارة الطبيب في أقرب وقت للتأكد)';
+                    preventionText = `
+                        <h3>الوقاية:</h3>
+                        <ul>
+                            <li>تجنب المحفزات التي تؤدي إلى ضيق التنفس.</li>
+                            <li>ممارسة الرياضة بانتظام لتحسين قدرة الرئتين.</li>
+                            <li>الابتعاد عن التدخين والأدخنة الضارة.</li>
+                        </ul>`;
+                    treatmentText = `
+                        <h3>العلاج:</h3>
+                        <ul>
+                            <li>استشارة الطبيب للتشخيص الدقيق والعلاج المناسب.</li>
+                            <li>استخدام الأدوية الموصوفة من قبل الطبيب.</li>
+                            <li>الراحة والتنفس العميق.</li>
+                        </ul>`;
+                    medicationText = `
+                        <h3>الأدوية:</h3>
+                        <ul>
+                            <li>أدوية موسعة للشعب الهوائية</li>
+                            <li>أدوية استنشاق (للربو)</li>
+                            <li>أدوية مدرة للبول (لقصور القلب)</li>
+                        </ul>`;
+                    break;
+                case 'muscle_ache':
+                    diagnosis = 'الأمراض المحتملة: التهاب العضلات، الإنفلونزا، الألم العضلي الليفي (يرجى استشارة الطبيب في أقرب وقت للتأكد)';
+                    preventionText = `
+                        <h3>الوقاية:</h3>
+                        <ul>
+                            <li>ممارسة التمارين الرياضية بانتظام.</li>
+                            <li>تجنب النشاط البدني المفرط.</li>
+                            <li>الحفاظ على الترطيب المناسب للجسم.</li>
+                        </ul>`;
+                    treatmentText = `
+                        <h3>العلاج:</h3>
+                        <ul>
+                            <li>استشارة الطبيب للحصول على التشخيص والعلاج المناسب.</li>
+                            <li>استخدام المسكنات عند الحاجة.</li>
+                            <li>تطبيق الكمادات الساخنة على العضلات المؤلمة.</li>
+                        </ul>`;
+                    medicationText = `
+                        <h3>الأدوية:</h3>
+                        <ul>
+                            <li>مسكنات للألم مثل الباراسيتامول أو الإيبوبروفين</li>
+                            <li>أدوية مضادة للالتهابات</li>
+                        </ul>`;
+                    break;
+                case 'chills':
+                    diagnosis = 'الأمراض المحتملة: الملاريا، الأنفلونزا، التهاب الحلق (يرجى استشارة الطبيب في أقرب وقت للتأكد)';
+                    preventionText = `
+                        <h3>الوقاية:</h3>
+                        <ul>
+                            <li>تجنب لدغات البعوض باستخدام طارد الحشرات.</li>
+                            <li>ارتداء ملابس دافئة في الطقس البارد.</li>
+                            <li>الحفاظ على نظافة الجسم والملابس.</li>
+                        </ul>`;
+                    treatmentText = `
+                        <h3>العلاج:</h3>
+                        <ul>
+                            <li>استشارة الطبيب للحصول على العلاج المناسب.</li>
+                            <li>تناول أدوية مضادة للفيروسات أو مضادات الملاريا إذا لزم الأمر.</li>
+                            <li>الراحة وشرب السوائل.</li>
+                        </ul>`;
+                    medicationText = `
+                        <h3>الأدوية:</h3>
+                        <ul>
+                            <li>أدوية مضادة للملاريا</li>
+                            <li>أدوية مضادة للفيروسات</li>
+                        </ul>`;
+                    break;
+                case 'loss_of_taste_smell':
+                    diagnosis = 'الأمراض المحتملة: COVID-19، التهاب الجيوب الأنفية، التهاب اللوزتين (يرجى استشارة الطبيب في أقرب وقت للتأكد)';
+                    preventionText = `
+                        <h3>الوقاية:</h3>
+                        <ul>
+                            <li>اتباع قواعد النظافة الشخصية.</li>
+                            <li>ارتداء الكمامة وتجنب الأماكن المزدحمة.</li>
+                            <li>استشارة الطبيب عند ظهور الأعراض.</li>
+                        </ul>`;
+                    treatmentText = `
+                        <h3>العلاج:</h3>
+                        <ul>
+                            <li>استشارة الطبيب للحصول على التشخيص والعلاج المناسب.</li>
+                            <li>استخدام أدوية مخصصة للأعراض.</li>
+                            <li>الراحة والتغذية السليمة.</li>
+                        </ul>`;
+                    medicationText = `
+                        <h3>الأدوية:</h3>
+                        <ul>
+                            <li>أدوية مضادة للفيروسات (إذا كانت الحالة COVID-19)</li>
+                            <li>أدوية علاج التهاب الجيوب الأنفية</li>
+                        </ul>`;
+                    break;
+                case 'chest_pain':
+                    diagnosis = 'الأمراض المحتملة: النوبة القلبية، التهاب الرئة، عسر الهضم (يرجى استشارة الطبيب في أقرب وقت للتأكد)';
+                    preventionText = `
+                        <h3>الوقاية:</h3>
+                        <ul>
+                            <li>اتباع نظام غذائي صحي.</li>
+                            <li>ممارسة التمارين الرياضية بانتظام.</li>
+                            <li>تجنب التدخين والكحول.</li>
+                        </ul>`;
+                    treatmentText = `
+                        <h3>العلاج:</h3>
+                        <ul>
+                            <li>استشارة الطبيب بشكل عاجل.</li>
+                            <li>تناول الأدوية الموصوفة.</li>
+                            <li>الرعاية الطبية الطارئة إذا لزم الأمر.</li>
+                        </ul>`;
+                    medicationText = `
+                        <h3>الأدوية:</h3>
+                        <ul>
+                            <li>أدوية علاج النوبات القلبية (مثل الأسبرين)</li>
+                            <li>أدوية مضادة للحموضة (لعسر الهضم)</li>
+                        </ul>`;
+                    break;
+                case 'rash':
+                    diagnosis = 'الأمراض المحتملة: الحساسية، التهاب الجلد، جدري الماء (يرجى استشارة الطبيب في أقرب وقت للتأكد)';
+                    preventionText = `
+                        <h3>الوقاية:</h3>
+                        <ul>
+                            <li>تجنب المواد المسببة للحساسية.</li>
+                            <li>ارتداء ملابس مناسبة لحماية الجلد.</li>
+                            <li>ممارسة النظافة الشخصية الجيدة.</li>
+                        </ul>`;
+                    treatmentText = `
+                        <h3>العلاج:</h3>
+                        <ul>
+                            <li>استشارة الطبيب للحصول على التشخيص والعلاج المناسب.</li>
+                            <li>استخدام الكريمات الموضعية الموصوفة.</li>
+                            <li>تجنب الحكّة والاحتكاك بالجلد المتأثر.</li>
+                        </ul>`;
+                    medicationText = `
+                        <h3>الأدوية:</h3>
+                        <ul>
+                            <li>كريمات مضادة للحساسية</li>
+                            <li>أدوية مضادة للفيروسات (إذا كانت العدوى فيروسية)</li>
+                        </ul>`;
+                    break;
+                default:
+                    diagnosis = 'لم يتم العثور على أمراض متطابقة مع العرض المختار.';
+                    preventionText = '';
+                    treatmentText = '';
+                    medicationText = '';
+                    break;
+            }
+
+            result.textContent = diagnosis;
+            result.className = 'result success';
+            prevention.innerHTML = preventionText;
+            treatment.innerHTML = treatmentText;
+            medication.innerHTML = medicationText;
+        }
+    </script>
+</body>
+</html>
